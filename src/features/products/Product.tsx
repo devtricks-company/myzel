@@ -26,7 +26,13 @@ const Product: FC<IProduct> = ({ product }) => {
       {!showAmount ? (
         <button
           onClick={() => {
-            dispatch(addToCart({ product, amout: amount }));
+            dispatch(
+              addToCart({
+                product,
+                amout: amount,
+                totalPrice: amount * product.fields.priceWithDiscount,
+              })
+            );
             setShowAmount(true);
           }}
         >
@@ -37,7 +43,13 @@ const Product: FC<IProduct> = ({ product }) => {
           <button
             onClick={() => {
               setAmount(amount + 1);
-              dispatch(updateToCart({ product, amout: amount + 1 }));
+              dispatch(
+                updateToCart({
+                  product,
+                  amout: amount + 1,
+                  totalPrice: (amount + 1) * product.fields.priceWithDiscount,
+                })
+              );
             }}
           >
             +
@@ -47,7 +59,13 @@ const Product: FC<IProduct> = ({ product }) => {
             onClick={() => {
               if (amount > 1) {
                 setAmount(amount - 1);
-                dispatch(updateToCart({ product, amout: amount - 1 }));
+                dispatch(
+                  updateToCart({
+                    product,
+                    amout: amount - 1,
+                    totalPrice: (amount - 1) * product.fields.priceWithDiscount,
+                  })
+                );
               }
             }}
           >

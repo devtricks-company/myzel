@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { stat } from "fs";
 import { RootState, AppThunk } from "../../app/store";
 import { CartType, CartItemType } from "./cart.types";
 
@@ -25,9 +26,20 @@ export const cartSlice = createSlice({
           : item
       );
     },
+
+    deleteItemFromCart: (
+      state: CartState,
+      action: PayloadAction<CartItemType>
+    ) => {
+      state.items = state.items.filter((item: CartItemType) => {
+        item.product.id === action.payload.product.id;
+      });
+    },
   },
 });
 
 export const { addToCart, updateToCart } = cartSlice.actions;
+
+export const selectCarts = (state: RootState) => state.cart.items;
 
 export default cartSlice.reducer;
